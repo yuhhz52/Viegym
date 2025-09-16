@@ -1,0 +1,16 @@
+# Node / frontend
+viegymfe/node_modules
+viegymfe/dist
+viegymfe/.env
+
+# Java / backend
+viegymapp/target
+viegymapp/.mvn
+viegymapp/.idea
+viegymapp/*.iml
+
+# Logs
+*.log
+
+# Docker
+*.env
