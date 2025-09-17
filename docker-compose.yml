@@ -1,5 +1,4 @@
-version: "3.9"
-
+version: '3.9'
 services:
   postgres:
     image: postgres:16
@@ -9,8 +8,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: viegym
+      TZ: Asia/Ho_Chi_Minh
     ports:
-      - "5433:5432"
+      - "5433:5432"   
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -24,6 +24,7 @@ services:
   backend:
     build: ./viegymapp
     container_name: viegym_backend
+    restart: always
     depends_on:
       - postgres
       - redis
@@ -32,6 +33,7 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 123456
       SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
     ports:
       - "8080:8080"
 
