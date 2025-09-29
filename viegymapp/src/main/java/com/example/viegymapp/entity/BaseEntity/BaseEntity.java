@@ -11,7 +11,6 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Setter
-// không tạo bảng riêng, chỉ để kế thừa
 @MappedSuperclass 
 public abstract class BaseEntity implements Serializable {
 

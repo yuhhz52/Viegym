@@ -25,11 +25,14 @@ public class RefreshToken extends BaseEntity{
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(nullable = false)
-    private String refreshToken;
+    @Column(name = "refresh_token", nullable = false, unique = true)
+    private String token;
 
-    private Boolean revoked = false;
-    private Instant expiresAt;
+    @Column(name = "is_revoked", nullable = false)
+    private boolean isRevoked = false;
+
+    @Column(name = "expiry_date", nullable = false)
+    private Instant expiryDate;
     
 }
 

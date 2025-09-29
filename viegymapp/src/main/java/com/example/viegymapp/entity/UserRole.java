@@ -5,8 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import com.example.viegymapp.entity.BaseEntity.BaseEntity;
-
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity

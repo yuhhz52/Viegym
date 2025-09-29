@@ -8,10 +8,13 @@ import java.util.UUID;
 import org.hibernate.annotations.UuidGenerator;
 
 import com.example.viegymapp.entity.BaseEntity.BaseEntity;
+import com.example.viegymapp.entity.Enum.ERole;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -23,6 +26,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor          
 @AllArgsConstructor
+
 @Builder
 public class Role extends BaseEntity{
 	@Id
@@ -30,12 +34,16 @@ public class Role extends BaseEntity{
     @Column(name = "role_id", updatable = false, nullable = false, columnDefinition = "UUID")
     private UUID id;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    private String name;
+    private ERole name;
 
     // Quan hệ 1-N với User qua UserRole
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserRole> userRoles = new HashSet<>();
 
+    public Role(ERole name) {
+        this.name = name;
+    }
 
 }
