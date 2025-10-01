@@ -6,10 +6,10 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.viegymapp.entity.Role;
-import com.example.viegymapp.entity.Enum.ERole;
+import com.example.viegymapp.entity.Enum.PredefinedRole;
 
 public interface RoleRepository extends JpaRepository<Role, UUID> {
     
-    Optional<Role> findByName(ERole name);
+    Optional<Role> findByName(PredefinedRole name);
     
 }

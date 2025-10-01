@@ -1,6 +1,5 @@
 package com.example.viegymapp.entity;
 
-import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -8,7 +7,7 @@ import java.util.UUID;
 import org.hibernate.annotations.UuidGenerator;
 
 import com.example.viegymapp.entity.BaseEntity.BaseEntity;
-import com.example.viegymapp.entity.Enum.ERole;
+import com.example.viegymapp.entity.Enum.PredefinedRole;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -36,13 +35,13 @@ public class Role extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    private ERole name;
+    private PredefinedRole name;
 
     // Quan hệ 1-N với User qua UserRole
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserRole> userRoles = new HashSet<>();
 
-    public Role(ERole name) {
+    public Role(PredefinedRole name) {
         this.name = name;
     }
 

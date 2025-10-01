@@ -1,4 +1,4 @@
-package com.example.viegymapp.service.Impl;
+package com.example.viegymapp.security.services;
 
 import com.example.viegymapp.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -87,5 +87,6 @@ public class UserDetailsImpl implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
+
 
 }

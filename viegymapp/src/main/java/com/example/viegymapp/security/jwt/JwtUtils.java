@@ -54,7 +54,7 @@ public class JwtUtils {
 
     //Sinh refresh token cookie
     public ResponseCookie generateRefreshJwtCookie(String refreshToken){
-        return generateCookie(jwtRefreshCookie, refreshToken, "/api/auth/refreshtoken");
+        return generateCookie(jwtRefreshCookie, refreshToken, "/api/auth");
     }
 
     // Lấy Token từ cookie

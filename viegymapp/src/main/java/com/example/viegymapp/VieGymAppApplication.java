@@ -1,6 +1,6 @@
 package com.example.viegymapp;
 
-import com.example.viegymapp.entity.Enum.ERole;
+import com.example.viegymapp.entity.Enum.PredefinedRole;
 import com.example.viegymapp.entity.Role;
 import com.example.viegymapp.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -17,14 +17,14 @@ public class VieGymAppApplication {
 	@Bean
 	CommandLineRunner run(RoleRepository roleRepository) {
 		return args -> {
-			if (roleRepository.findByName(ERole.ROLE_USER).isEmpty()) {
-				roleRepository.save(new Role(ERole.ROLE_USER));
+			if (roleRepository.findByName(PredefinedRole.ROLE_USER).isEmpty()) {
+				roleRepository.save(new Role(PredefinedRole.ROLE_USER));
 			}
-			if (roleRepository.findByName(ERole.ROLE_ADMIN).isEmpty()) {
-				roleRepository.save(new Role(ERole.ROLE_ADMIN));
+			if (roleRepository.findByName(PredefinedRole.ROLE_ADMIN).isEmpty()) {
+				roleRepository.save(new Role(PredefinedRole.ROLE_ADMIN));
 			}
-			if (roleRepository.findByName(ERole.ROLE_COACH).isEmpty()) {
-				roleRepository.save(new Role(ERole.ROLE_COACH));
+			if (roleRepository.findByName(PredefinedRole.ROLE_COACH).isEmpty()) {
+				roleRepository.save(new Role(PredefinedRole.ROLE_COACH));
 			}
 		};
 	}

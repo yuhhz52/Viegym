@@ -1,6 +1,7 @@
 package com.example.viegymapp.dto.response;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import lombok.*;
@@ -13,11 +14,12 @@ import lombok.*;
 public class JwtResponse {
 
     private String accessToken;
-	private String type = "Bearer";
+	@Builder.Default
+	private String tokenType = "Bearer";
 	private String refreshToken;
 	private UUID id;
 	private String userName;
 	private String email;
-	private List<String> roles;
+	private Set<String> roles;
     
 }

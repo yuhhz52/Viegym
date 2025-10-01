@@ -1,19 +1,20 @@
-package com.example.viegymapp.security.services;
+package com.example.viegymapp.service;
 
 import com.example.viegymapp.dto.request.LoginRequest;
 import com.example.viegymapp.dto.response.MessageResponse;
 import com.example.viegymapp.dto.response.TokenRefreshResponse;
 import com.example.viegymapp.dto.response.UserInfoResponse;
 import com.example.viegymapp.entity.RefreshToken;
+import com.example.viegymapp.entity.User;
 import com.example.viegymapp.exception.TokenRefreshException;
+import com.example.viegymapp.repository.RefreshTokenRepository;
 import com.example.viegymapp.security.jwt.JwtUtils;
-import com.example.viegymapp.service.RefreshTokenService;
+import com.example.viegymapp.security.services.UserDetailsImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +31,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final RefreshTokenService refreshTokenService;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     public UserInfoResponse login(LoginRequest loginRequest, HttpServletResponse response) {
         Authentication authentication = authenticationManager.authenticate(
@@ -58,15 +61,27 @@ public class AuthService {
         );
     }
 
-    public MessageResponse logout(HttpServletResponse response) {
-        ResponseCookie cleanJwt = jwtUtils.getCleanJwtCookie();
-        ResponseCookie cleanRefresh = jwtUtils.getCleanJwtRefreshCookie();
+    public MessageResponse logout(UUID userId, HttpServletResponse response) {
+        refreshTokenRepository.deleteByUserId(userId);
+
+        ResponseCookie cleanJwt = ResponseCookie.from("viegym-jwt", "")
+                .path("/api")
+                .httpOnly(true)
+                .maxAge(0)
+                .build();
+
+        ResponseCookie cleanRefresh = ResponseCookie.from("viegym-jwt-refresh", "")
+                .path("/api/auth")
+                .httpOnly(true)
+                .maxAge(0)
+                .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, cleanJwt.toString());
         response.addHeader(HttpHeaders.SET_COOKIE, cleanRefresh.toString());
 
         return new MessageResponse("Logout successful");
     }
+
 
 
     public TokenRefreshResponse refreshToken(HttpServletRequest request, HttpServletResponse response) {
@@ -86,11 +101,10 @@ public class AuthService {
                                 .refreshToken(refreshToken)
                                 .build();
                     })
-                    .orElseThrow(() -> new TokenRefreshException(refreshToken,
-                            "Refresh token không có trong cơ sở dữ liệu!"));
+                    .orElseThrow(() -> new TokenRefreshException(refreshToken, TokenRefreshException.TOKEN_NOT_FOUND_MESSAGE));
         }
 
-        throw new TokenRefreshException(null, "Refresh Token đang trống!");
+        throw new TokenRefreshException(refreshToken, TokenRefreshException.TOKEN_EMPTY_MESSAGE);
     }
 
 }

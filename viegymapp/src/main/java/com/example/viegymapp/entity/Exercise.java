@@ -36,11 +36,16 @@ public class Exercise extends BaseEntity{
 
     private String difficulty; // easy, medium, hard
 
-    @Column(columnDefinition = "TEXT[]")
-    private String[] tags;
-
     @Column(columnDefinition = "JSONB")
     private String metadata;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "exercise_tags",
+            joinColumns = @JoinColumn(name = "exercise_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")

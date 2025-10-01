@@ -23,5 +23,6 @@ viegym:
     jwtCookieName: viegym-jwt
     jwtRefreshCookieName: viegym-jwt-refresh
     jwtSecret: "1c4e9676c4fb52381bac0b849320e2fbd92ef2e3ccf42c8938900d51598d91f7"
-    jwtExpirationMs: 60000            
-    jwtRefreshExpirationMs: 180000    
+#    //15 phút = 15 × 60 × 1000 = 900000 ms
+    jwtExpirationMs: 900000
+    jwtRefreshExpirationMs: 604800000

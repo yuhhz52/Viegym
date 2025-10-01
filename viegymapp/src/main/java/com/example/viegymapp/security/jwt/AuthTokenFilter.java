@@ -1,6 +1,6 @@
 package com.example.viegymapp.security.jwt;
 
-import com.example.viegymapp.service.UserDetailsServiceImpl;
+import com.example.viegymapp.service.Impl.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

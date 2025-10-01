@@ -1,6 +1,6 @@
 package com.example.viegymapp.entity.Enum;
 
-public enum ERole {
+public enum PredefinedRole {
   ROLE_USER,
   ROLE_COACH,
   ROLE_ADMIN

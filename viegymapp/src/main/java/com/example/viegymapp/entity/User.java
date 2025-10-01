@@ -1,6 +1,7 @@
 package com.example.viegymapp.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -18,7 +19,6 @@ import org.hibernate.annotations.UuidGenerator;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor // constructor cho field @NonNull
 @Builder
 public class User extends BaseEntity {
 
@@ -27,15 +27,12 @@ public class User extends BaseEntity {
     @Column(name = "user_id", updatable = false, nullable = false, columnDefinition = "UUID")
     private UUID id;
 
-    @NonNull
     @Column(name = "user_name", unique = true)
     private String userName;
 
-    @NonNull
     @Column(name = "email", unique = true)
     private String email;
 
-    @NonNull
     @Column(name = "password", nullable = false)
     private String password;
 

@@ -2,6 +2,8 @@ package com.example.viegymapp.service;
 
 import com.example.viegymapp.entity.RefreshToken;
 import com.example.viegymapp.entity.User;
+import com.example.viegymapp.exception.AppException;
+import com.example.viegymapp.exception.ErrorCode;
 import com.example.viegymapp.exception.TokenRefreshException;
 import com.example.viegymapp.repository.RefreshTokenRepository;
 import com.example.viegymapp.repository.UserRepository;
@@ -32,7 +34,7 @@ public class RefreshTokenService {
 
     public RefreshToken createRefreshToken(UUID userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         RefreshToken refreshToken = RefreshToken.builder()
                 .user(user)
@@ -46,10 +48,8 @@ public class RefreshTokenService {
     public RefreshToken verifyExpiration(RefreshToken token) {
         if (token.getExpiryDate().isBefore(Instant.now())) {
             refreshTokenRepository.delete(token);
-            throw new TokenRefreshException(
-                    token.getToken(),
-                    "Refresh token was expired. Please make a new signin request"
-            );
+            throw new TokenRefreshException(token.getToken(), TokenRefreshException.EXPIRED_MESSAGE);
+
         }
         return token;
     }
@@ -57,7 +57,9 @@ public class RefreshTokenService {
     @Transactional
     public int deleteByUserId(UUID userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
-        return refreshTokenRepository.deleteByUser(user);
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        return refreshTokenRepository.deleteByUserId(userId);
     }
+
+
 }

@@ -2,7 +2,7 @@ package com.example.viegymapp.config;
 
 import com.example.viegymapp.security.jwt.AuthEntryPointJwt;
 import com.example.viegymapp.security.jwt.AuthTokenFilter;
-import com.example.viegymapp.service.UserDetailsServiceImpl;
+import com.example.viegymapp.service.Impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -60,6 +60,7 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/user/**").permitAll()
                                 .requestMatchers("/api/test/**").permitAll()
                                 .anyRequest().authenticated()
                 );

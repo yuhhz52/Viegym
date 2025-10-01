@@ -1,7 +1,8 @@
-package com.example.viegymapp.service;
+package com.example.viegymapp.service.Impl;
 
 import com.example.viegymapp.entity.User;
 import com.example.viegymapp.repository.UserRepository;
+import com.example.viegymapp.security.services.UserDetailsImpl;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
