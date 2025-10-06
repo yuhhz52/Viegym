@@ -5,14 +5,14 @@ import com.example.viegymapp.dto.response.MessageResponse;
 import com.example.viegymapp.dto.response.TokenRefreshResponse;
 import com.example.viegymapp.dto.response.UserInfoResponse;
 import com.example.viegymapp.entity.RefreshToken;
-import com.example.viegymapp.entity.User;
-import com.example.viegymapp.exception.TokenRefreshException;
+import com.example.viegymapp.exception.AppException;
+import com.example.viegymapp.exception.ErrorCode;
 import com.example.viegymapp.repository.RefreshTokenRepository;
 import com.example.viegymapp.security.jwt.JwtUtils;
 import com.example.viegymapp.security.services.UserDetailsImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,12 +26,15 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class AuthService {
-    private final AuthenticationManager authenticationManager;
-    private final JwtUtils jwtUtils;
-    private final RefreshTokenService refreshTokenService;
-    private final RefreshTokenRepository refreshTokenRepository;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtUtils jwtUtils;
+    @Autowired
+    private RefreshTokenService refreshTokenService;
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
 
     public UserInfoResponse login(LoginRequest loginRequest, HttpServletResponse response) {
         Authentication authentication = authenticationManager.authenticate(
@@ -101,10 +104,10 @@ public class AuthService {
                                 .refreshToken(refreshToken)
                                 .build();
                     })
-                    .orElseThrow(() -> new TokenRefreshException(refreshToken, TokenRefreshException.TOKEN_NOT_FOUND_MESSAGE));
+                    .orElseThrow(() -> new AppException(ErrorCode.TOKEN_REFRESH_FAILED));
         }
 
-        throw new TokenRefreshException(refreshToken, TokenRefreshException.TOKEN_EMPTY_MESSAGE);
+        throw new AppException(ErrorCode.TOKEN_REFRESH_FAILED);
     }
 
 }

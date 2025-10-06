@@ -1,5 +1,6 @@
 package com.example.viegymapp.entity;
 
+import aj.org.objectweb.asm.ConstantDynamic;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
@@ -23,7 +24,7 @@ public class UserRole extends BaseEntity{
     @Column(name = "user_role_id", updatable = false, nullable = false, columnDefinition = "UUID")
     private UUID id;
 
-     @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -35,5 +36,6 @@ public class UserRole extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assigned_by")
     private User assignedBy;
+
 
 }

@@ -10,11 +10,11 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "program_exercises")
-@Getter 
-@Setter 
-@NoArgsConstructor 
-@AllArgsConstructor 
-@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class ProgramExercise extends BaseEntity{
     @Id
     @UuidGenerator
@@ -34,8 +34,9 @@ public class ProgramExercise extends BaseEntity{
 
     @Column(name = "order_no")
     private Integer orderNo = 0;
-    
+
     private Integer sets;
+
     private String reps;
 
     @Column(name = "weight_scheme")
@@ -43,5 +44,6 @@ public class ProgramExercise extends BaseEntity{
 
     @Column(name = "rest_seconds")
     private Integer restSeconds;
+
     private String notes;
 }

@@ -1,7 +1,10 @@
 package com.example.viegymapp.entity;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.vladmihalcea.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UuidGenerator;
 
 import com.example.viegymapp.entity.BaseEntity.BaseEntity;
@@ -17,8 +20,8 @@ import java.util.UUID;
 @Getter
 @Setter 
 @NoArgsConstructor
-@AllArgsConstructor 
-@Builder
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class WorkoutProgram extends BaseEntity{
     @Id
     @UuidGenerator
@@ -37,10 +40,11 @@ public class WorkoutProgram extends BaseEntity{
     @Column(name = "duration_weeks")
     private Integer durationWeeks;
     
-    private String visibility = "private";
+    private String visibility;
 
+    @Type(JsonType.class)
     @Column(columnDefinition = "jsonb")
-    private String metadata;
+    private JsonNode metadata;
 
     // N-N với Exercise qua ProgramExercise
     @OneToMany(mappedBy = "program")

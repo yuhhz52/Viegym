@@ -7,7 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class MessageResponse {
-
     private String message;
     
 }

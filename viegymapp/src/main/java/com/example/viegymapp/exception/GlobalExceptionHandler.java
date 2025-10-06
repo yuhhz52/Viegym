@@ -4,15 +4,16 @@ import com.example.viegymapp.dto.response.ApiResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.nio.file.AccessDeniedException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -21,7 +22,8 @@ import java.util.Objects;
 public class GlobalExceptionHandler {
     private static final String MIN_ATTRIBUTE = "min";
 
-    @ExceptionHandler(value = Exception.class)
+    //Bắt toàn bộ exception chưa xử lý
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handlingException(Exception exception) {
         log.error("Exception: ", exception);
         ApiResponse apiResponse = new ApiResponse();
@@ -41,8 +43,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
     }
 
-
-    @ExceptionHandler(value = AccessDeniedException.class)
+    //Dùng khi user không đủ quyền truy cập
+    @ExceptionHandler(AccessDeniedException.class)
     ResponseEntity<ApiResponse> handlingAccessDeniedException(AccessDeniedException exception) {
         ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
 
@@ -53,7 +55,8 @@ public class GlobalExceptionHandler {
                         .build());
     }
 
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    //Validation lỗi @Valid
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<ApiResponse> handlingValidation(MethodArgumentNotValidException exception) {
         String enumKey = exception.getFieldError().getDefaultMessage();
 
@@ -89,32 +92,54 @@ public class GlobalExceptionHandler {
         return message.replace("{" + MIN_ATTRIBUTE + "}", minValue);
     }
 
-    @ExceptionHandler(TokenRefreshException.class)
-    public ResponseEntity<Map<String, String>> handleTokenRefreshException(TokenRefreshException ex) {
-        Map<String, String> body = new HashMap<>();
-        body.put("error", ex.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
+        ApiResponse response = ApiResponse.builder()
+                .code(ErrorCode.INVALID_KEY.getCode())
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.badRequest().body(response);
     }
-
 
     // Validation lỗi @RequestParam, @PathVariable
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ApiResponse> handleConstraintViolation(ConstraintViolationException ex) {
-        ApiResponse response = new ApiResponse();
-        response.setCode(400);
-        response.setMessage(ex.getConstraintViolations().iterator().next().getMessage());
-        return ResponseEntity.badRequest().body(response);
+        ApiResponse response = ApiResponse.builder()
+                .code(ErrorCode.CONSTRAINT_VIOLATION.getCode())
+                .message(ex.getConstraintViolations().iterator().next().getMessage())
+                .build();
+        return ResponseEntity.status(ErrorCode.CONSTRAINT_VIOLATION.getStatusCode()).body(response);
     }
 
     // Gọi sai HTTP method
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ApiResponse> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
-        ApiResponse response = new ApiResponse();
-        response.setCode(405);
-        response.setMessage("Request method not supported: " + ex.getMethod());
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(response);
+        ApiResponse response = ApiResponse.builder()
+                .code(ErrorCode.METHOD_NOT_SUPPORTED.getCode())
+                .message(ErrorCode.METHOD_NOT_SUPPORTED.getMessage() + ": " + ex.getMethod())
+                .build();
+        return ResponseEntity.status(ErrorCode.METHOD_NOT_SUPPORTED.getStatusCode()).body(response);
     }
 
+    // Thêm exception handler cho DataAccessException
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity<ApiResponse> handleDataAccessException(DataAccessException ex) {
+        log.error("Database error: ", ex);
+        ApiResponse response = ApiResponse.builder()
+                .code(ErrorCode.DATABASE_ERROR.getCode())
+                .message("Database operation failed")
+                .build();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
 
+    // Thêm exception handler cho FileUploadException
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiResponse> handleMaxSizeException(MaxUploadSizeExceededException ex) {
+        ApiResponse response = ApiResponse.builder()
+                .code(ErrorCode.FILE_TOO_LARGE.getCode())
+                .message(ErrorCode.FILE_TOO_LARGE.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 
 }

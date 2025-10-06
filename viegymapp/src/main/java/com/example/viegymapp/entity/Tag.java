@@ -1,5 +1,6 @@
 package com.example.viegymapp.entity;
 
+import com.example.viegymapp.entity.BaseEntity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
@@ -13,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Tag {
+public class Tag extends BaseEntity {
 
     @Id
     @GeneratedValue

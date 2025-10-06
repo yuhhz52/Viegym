@@ -46,20 +46,17 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setIsActive(true);
 
-        if (user.getUserRoles() == null) {
-            user.setUserRoles(new HashSet<>());
-        }
-
         Role defaultRole = roleRepository.findByName(PredefinedRole.ROLE_USER)
                 .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
 
-        UserRole userRole = new UserRole();
-        userRole.setUser(user);
-        userRole.setRole(defaultRole);
+        UserRole userRole = UserRole.builder()
+                .user(user)
+                .role(defaultRole)
+                .assignedBy(user)
+                .build();
+
         defaultRole.getUserRoles().add(userRole);
-
         user.getUserRoles().add(userRole);
-
 
         try {
             user = userRepository.save(user);
@@ -92,22 +89,18 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserName(username)
                 .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
 
-        // Cập nhật các field cơ bản từ request
         userMapper.updateUser(user, request);
         // Nếu muốn đổi mật khẩu
         if (request.getPassword() != null && !request.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(request.getPassword()));
         }
-        // Nếu muốn đổi email, kiểm tra email chưa tồn tại
         if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
             if (userRepository.existsByEmail(request.getEmail())) {
                 throw new AppException(ErrorCode.EMAIL_ALREADY_USED);
             }
             user.setEmail(request.getEmail());
         }
-        // Lưu user đã cập nhật
         User savedUser = userRepository.save(user);
-        // Trả về DTO
         return userMapper.toUserResponse(savedUser);
     }
 
@@ -156,25 +149,35 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse assignRoleToUser(UUID userId, PredefinedRole roleName) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new  AppException(ErrorCode.USER_NOT_EXISTED));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         Role role = roleRepository.findByName(roleName)
                 .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
+
+        // Lấy người dùng hiện tại (người thực hiện gán role)
+        var context = SecurityContextHolder.getContext();
+        String currentUsername = context.getAuthentication().getName();
+        User currentUser = userRepository.findByUserName(currentUsername)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
         // Kiểm tra user đã có role này chưa
         boolean exists = user.getUserRoles().stream()
                 .anyMatch(ur -> ur.getRole().getName().equals(roleName));
 
         if (!exists) {
-            UserRole userRole = new UserRole();
-            userRole.setUser(user);
-            userRole.setRole(role);
+            UserRole userRole = UserRole.builder()
+                    .user(user)
+                    .role(role)
+                    .assignedBy(currentUser)
+                    .build();
+
             user.getUserRoles().add(userRole);
             userRoleRepository.save(userRole);
         }
         return userMapper.toUserResponse(user);
     }
 
-    //Xoa người dùng
+        //Xoa người dùng
     @Transactional
     public void deleteUser(UUID id) {
         User user = userRepository.findById(id)

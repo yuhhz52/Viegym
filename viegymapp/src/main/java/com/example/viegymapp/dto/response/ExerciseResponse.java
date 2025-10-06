@@ -1,7 +1,9 @@
 package com.example.viegymapp.dto.response;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,5 +19,7 @@ public class ExerciseResponse {
     private String muscleGroup;
     private String difficulty;
     private Set<String> tags;
-    private String metadata;
+    private JsonNode metadata;
+    private List<ExerciseMediaResponse> mediaList;
+    private UUID createdById;
 }

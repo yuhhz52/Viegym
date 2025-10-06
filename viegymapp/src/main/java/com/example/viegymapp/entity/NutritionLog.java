@@ -33,12 +33,13 @@ public class NutritionLog extends BaseLogEntity{
     private String mealType;
 
     private Integer calories;
+
     @Column(name = "protein_g")
-
     private Integer proteinG;
-    @Column(name = "carbs_g")
 
+    @Column(name = "carbs_g")
     private Integer carbsG;
+
     @Column(name = "fats_g")
     private Integer fatsG;
     

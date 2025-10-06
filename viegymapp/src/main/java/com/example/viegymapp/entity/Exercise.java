@@ -1,13 +1,15 @@
 package com.example.viegymapp.entity;
 
+import com.example.viegymapp.entity.Enum.DifficultyLevel;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.vladmihalcea.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UuidGenerator;
 import com.example.viegymapp.entity.BaseEntity.BaseEntity;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+
+import java.util.*;
 
 @Entity
 @Table(name = "exercises", indexes = {
@@ -34,10 +36,12 @@ public class Exercise extends BaseEntity{
     @Column(name = "muscle_group")
     private String muscleGroup;
 
-    private String difficulty; // easy, medium, hard
+    @Enumerated(EnumType.STRING)
+    private DifficultyLevel difficulty;
 
-    @Column(columnDefinition = "JSONB")
-    private String metadata;
+    @Type(JsonType.class)
+    @Column(columnDefinition = "jsonb")
+    private JsonNode metadata;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -59,4 +63,6 @@ public class Exercise extends BaseEntity{
 
     @OneToMany(mappedBy = "exercise")
     private Set<SessionExerciseLog> sessionLogs = new HashSet<>();
+
+
 }

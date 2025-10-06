@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ExerciseMediaCreateRequest {
+public class ExerciseMediaRequest {
 
     @NotBlank(message = "Media type is required")
     private String mediaType; // image, video

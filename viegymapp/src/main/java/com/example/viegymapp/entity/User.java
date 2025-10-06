@@ -87,8 +87,8 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private Set<PostLike> likes = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private Set<RefreshToken> refreshTokens = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RefreshToken> refreshTokens;
 
 
 }
