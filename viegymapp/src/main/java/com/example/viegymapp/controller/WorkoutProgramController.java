@@ -5,16 +5,17 @@ import com.example.viegymapp.dto.response.*;
 import com.example.viegymapp.service.WorkoutProgramService;
 import com.example.viegymapp.dto.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
 @RequestMapping("/api/programs")
-@RequiredArgsConstructor
-public class WorkoutProgramController {
 
-    private final WorkoutProgramService programService;
+public class WorkoutProgramController {
+    @Autowired
+    private WorkoutProgramService programService;
 
     @GetMapping
     public ApiResponse<List<WorkoutProgramResponse>> getAllPrograms() {

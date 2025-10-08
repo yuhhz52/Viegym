@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3eadcb5d-fa23-435e-8126-b24445869423" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/controller/WorkoutSessionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/dto/request/SessionExerciseLogRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/dto/request/WorkoutSessionRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/dto/response/SessionExerciseLogResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/dto/response/WorkoutSessionResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/mapper/SessionExerciseLogMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/mapper/WorkoutSessionMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/repository/SessionExerciseLogRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/repository/WorkoutSessionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/service/Impl/SessionExerciseLogServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/service/Impl/WorkoutSessionServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/service/SessionExerciseLogService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/service/WorkoutSessionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/controller/WorkoutProgramController.java" beforeDir="false" afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/controller/WorkoutProgramController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/exception/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/exception/ErrorCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/service/Impl/ExerciseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/service/Impl/ExerciseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/viegymapp/src/main/java/com/example/viegymapp/service/Impl/UserServiceImpl.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="33itW6E5mkBhLjVHAVTyTRGMeAJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "E:/KLTN/VieGym/viegymapp"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3eadcb5d-fa23-435e-8126-b24445869423" name="Changes" comment="" />
+      <created>1759811748445</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1759811748445</updated>
+    </task>
+    <servers />
+  </component>
+</project>

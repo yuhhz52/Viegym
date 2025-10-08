@@ -86,7 +86,6 @@ public class AuthService {
     }
 
 
-
     public TokenRefreshResponse refreshToken(HttpServletRequest request, HttpServletResponse response) {
         String refreshToken = jwtUtils.getJwtRefreshFromCookies(request);
 

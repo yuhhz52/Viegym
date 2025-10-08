@@ -27,6 +27,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
@@ -75,7 +76,7 @@ public class UserServiceImpl implements UserService {
         String username = context.getAuthentication().getName();
 
         User user = userRepository.findByUserName(username)
-                .orElseThrow(()-> new AppException(ErrorCode.ROLE_NOT_FOUND));
+                .orElseThrow(()-> new AppException(ErrorCode.USER_NOT_EXISTED));
         return userMapper.toUserResponse(user);
     }
 
@@ -87,7 +88,7 @@ public class UserServiceImpl implements UserService {
         var context = SecurityContextHolder.getContext();
         String username = context.getAuthentication().getName();
         User user = userRepository.findByUserName(username)
-                .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         userMapper.updateUser(user, request);
         // Nếu muốn đổi mật khẩu

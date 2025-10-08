@@ -12,12 +12,19 @@ import java.util.UUID;
 public interface UserService {
 
     UserResponse createUser(UserCreationRequest request);
+
     UserResponse getCurrentUser();
+
     UserResponse updateCurrentUser(UserUpdateRequest request);
+
     UserResponse updateUserById(UUID id, UserUpdateRequest request);
+
     UserResponse getUserById(UUID id);
+
     List<UserResponse> getAllUsers();
+
     UserResponse assignRoleToUser(UUID userId, PredefinedRole roleName);
+
     void deleteUser(UUID id);
 
 

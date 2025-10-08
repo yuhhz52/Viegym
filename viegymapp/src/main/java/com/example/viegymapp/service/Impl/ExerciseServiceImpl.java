@@ -16,15 +16,19 @@ import com.example.viegymapp.mapper.ExerciseMediaMapper;
 import com.example.viegymapp.repository.ExerciseMediaRepository;
 import com.example.viegymapp.repository.ExerciseRepository;
 import com.example.viegymapp.repository.TagRepository;
+import com.example.viegymapp.repository.UserRepository;
 import com.example.viegymapp.service.ExerciseService;
 import com.example.viegymapp.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ExerciseServiceImpl implements ExerciseService {
     @Autowired
     private ExerciseRepository exerciseRepository;
@@ -38,6 +42,7 @@ public class ExerciseServiceImpl implements ExerciseService {
     private UserService userService;
     @Autowired
     private TagRepository tagRepository;
+
 
     @Override
     public List<ExerciseResponse> getExercises(String difficulty, String muscleGroup) {
@@ -75,8 +80,6 @@ public class ExerciseServiceImpl implements ExerciseService {
             throw new AppException(ErrorCode.INVALID_REQUEST_PARAMETER);
         }
     }
-
-
 
     @Override
     public ExerciseResponse getExerciseById(UUID id) {
@@ -189,4 +192,5 @@ public class ExerciseServiceImpl implements ExerciseService {
                 .orElseThrow(() -> new AppException(ErrorCode.RESOURCE_NOT_FOUND));
         exerciseMediaRepository.delete(media);
     }
+
 }

@@ -1,4 +1,5 @@
 package com.example.viegymapp.entity;
+import com.example.viegymapp.entity.Enum.MealType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
@@ -29,8 +30,9 @@ public class NutritionLog extends BaseLogEntity{
     @Column(name = "log_date")
     private LocalDate logDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "meal_type")
-    private String mealType;
+    private MealType mealType;
 
     private Integer calories;
 

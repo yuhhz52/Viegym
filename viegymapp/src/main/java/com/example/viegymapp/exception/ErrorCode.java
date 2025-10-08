@@ -31,8 +31,10 @@ public enum ErrorCode {
     METHOD_NOT_SUPPORTED(1022, "Request method not supported", HttpStatus.METHOD_NOT_ALLOWED),
     MEDIA_NOT_FOUND(1023, "ExerciseMedia not found", HttpStatus.NOT_FOUND),
     PROGRAM_NOT_FOUND(1024, "Program not found",HttpStatus.NOT_FOUND),
-    PROGRAM_EXERCISE_NOT_FOUND(1024, "ProgramExercise not found",HttpStatus.NOT_FOUND)
-
+    PROGRAM_EXERCISE_NOT_FOUND(1025, "ProgramExercise not found",HttpStatus.NOT_FOUND),
+    SESSION_NOT_FOUND(1026, "Session not found",HttpStatus.NOT_FOUND),
+    LOG_NOT_FOUND(1027, "Log not found",HttpStatus.NOT_FOUND),
+    HEALTH_LOG_NOT_FOUND(1028, "Health log not found",HttpStatus.NOT_FOUND),
 
     ;
 
