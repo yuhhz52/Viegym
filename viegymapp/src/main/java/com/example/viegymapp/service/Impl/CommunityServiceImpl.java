@@ -97,24 +97,26 @@ public class CommunityServiceImpl implements CommunityService {
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
 
-        // update media: đơn giản xóa cũ, thêm mới
-        mediaRepo.deleteAll(post.getMedia());
+        // Xóa toàn bộ media cũ trong danh sách
+        post.getMedia().clear();
 
-        if (request.getMediaUrls() != null) {
-            CommunityPost finalPost = post; // tạo biến final
-            Set<PostMedia> mediaList = request.getMediaUrls().stream().map(url -> {
+        if (request.getMediaUrls() != null && !request.getMediaUrls().isEmpty()) {
+            for (String url : request.getMediaUrls()) {
                 PostMedia media = PostMedia.builder()
-                        .post(finalPost)
                         .url(url)
                         .mediaType("IMAGE")
+                        .post(post)
                         .build();
-                return mediaRepo.save(media);
-            }).collect(Collectors.toSet());
-            post.setMedia(mediaList);
+                post.getMedia().add(media);
+            }
         }
 
-        return mapper.toResponse(postRepo.save(post));
+        // Hibernate tự xử lý cascade và orphanRemoval
+        postRepo.save(post);
+
+        return mapper.toResponse(post);
     }
+
 
 
     @Override
@@ -145,7 +147,8 @@ public class CommunityServiceImpl implements CommunityService {
             comment.setParentComment(parent);
         }
 
-        comment = commentRepo.save(comment);
+        // saveAndFlush to ensure createdAt is set before mapping
+        comment = commentRepo.saveAndFlush(comment);
         return mapper.toResponse(comment);
     }
 

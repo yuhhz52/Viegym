@@ -44,7 +44,7 @@ public interface CommunityMapper {
     @Mapping(target = "replies", ignore = true)
     PostComment toEntity(PostCommentRequest request);
 
-    @Mapping(target = "authorName", source = "user.fullName")
+    @Mapping(target = "authorName", expression = "java(comment.getUser() != null && comment.getUser().getFullName() != null && !comment.getUser().getFullName().isBlank() ? comment.getUser().getFullName() : (comment.getUser() != null ? comment.getUser().getUserName() : null))")
     @Mapping(target = "replies", expression = "java(mapReplies(comment.getReplies()))")
     @Mapping(target = "createdAt", expression = "java(map(comment.getCreatedAt()))")
     PostCommentResponse toResponse(PostComment comment);
