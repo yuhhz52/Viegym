@@ -8,7 +8,6 @@ import com.example.viegymapp.dto.response.WorkoutSessionResponse;
 import com.example.viegymapp.service.SessionExerciseLogService;
 import com.example.viegymapp.service.WorkoutSessionService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/workouts")
-
 public class WorkoutSessionController {
     @Autowired
     private WorkoutSessionService sessionService;
@@ -94,7 +92,4 @@ public class WorkoutSessionController {
                 .result(id)
                 .build();
     }
-
-
-
 }

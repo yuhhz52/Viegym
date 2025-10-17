@@ -35,6 +35,8 @@ public enum ErrorCode {
     SESSION_NOT_FOUND(1026, "Session not found",HttpStatus.NOT_FOUND),
     LOG_NOT_FOUND(1027, "Log not found",HttpStatus.NOT_FOUND),
     HEALTH_LOG_NOT_FOUND(1028, "Health log not found",HttpStatus.NOT_FOUND),
+    POST_NOT_FOUND(1029, "Post not found",HttpStatus.NOT_FOUND),
+    COMMENT_NOT_FOUND(1029, "Parent comment not found",HttpStatus.NOT_FOUND),
 
     ;
 

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/health")
+@RequestMapping("api/health")
 public class HealthLogController {
 
     @Autowired

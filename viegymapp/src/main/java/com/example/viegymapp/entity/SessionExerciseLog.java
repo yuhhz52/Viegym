@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+//@Builder
 public class SessionExerciseLog extends BaseLogEntity{
      @Id
     @UuidGenerator

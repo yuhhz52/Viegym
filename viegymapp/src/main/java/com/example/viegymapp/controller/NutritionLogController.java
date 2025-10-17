@@ -58,10 +58,10 @@ public class NutritionLogController {
      * DELETE /nutrition/{id}
      */
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteLog(@PathVariable UUID id) {
+    public ApiResponse<UUID> deleteLog(@PathVariable UUID id) {
         nutritionLogService.deleteLog(id);
-        return ApiResponse.<Void>builder()
-                .message("Deleted successfully")
+        return ApiResponse.<UUID>builder()
+                .result(id)
                 .build();
     }
 }

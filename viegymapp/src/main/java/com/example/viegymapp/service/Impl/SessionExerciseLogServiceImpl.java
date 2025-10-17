@@ -31,13 +31,17 @@ public class SessionExerciseLogServiceImpl implements SessionExerciseLogService 
 
     @Override
     public SessionExerciseLogResponse createLog(SessionExerciseLogRequest request) {
-        SessionExerciseLog log = sessionExerciseLogMapper.toEntity(request);
-        log.setSession(sessionRepo.findById(request.getSessionId())
-                .orElseThrow(() -> new RuntimeException("Session not found")));
-        log.setExercise(exerciseRepo.findById(request.getExerciseId())
-                .orElseThrow(() -> new RuntimeException("Exercise not found")));
-
-        return sessionExerciseLogMapper.toResponse(logRepo.save(log));
+        SessionExerciseLog sessionLog = sessionExerciseLogMapper.toEntity(request);
+        
+        sessionLog.setSession(sessionRepo.findById(request.getSessionId())
+                .orElseThrow(() -> new AppException(ErrorCode.SESSION_NOT_FOUND)));
+        
+        sessionLog.setExercise(exerciseRepo.findById(request.getExerciseId())
+                .orElseThrow(() -> new AppException(ErrorCode.EXERCISE_NOT_FOUND)));
+        
+        SessionExerciseLog savedLog = logRepo.save(sessionLog);
+        
+        return sessionExerciseLogMapper.toResponse(savedLog);
     }
 
     @Override
@@ -49,7 +53,7 @@ public class SessionExerciseLogServiceImpl implements SessionExerciseLogService 
     @Override
     public SessionExerciseLogResponse updateLog(UUID id, SessionExerciseLogRequest request) {
         SessionExerciseLog log = logRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Log not found"));
+                .orElseThrow(() -> new AppException(ErrorCode.LOG_NOT_FOUND));
 
         log.setSetNumber(request.getSetNumber());
         log.setRepsDone(request.getRepsDone());
@@ -60,8 +64,8 @@ public class SessionExerciseLogServiceImpl implements SessionExerciseLogService 
 
     @Override
     public void deleteLog(UUID id) {
-        if(!logRepo.existsById(id)){
-            throw new AppException(ErrorCode.SESSION_NOT_FOUND);
+        if (!logRepo.existsById(id)) {
+            throw new AppException(ErrorCode.LOG_NOT_FOUND);
         }
         logRepo.deleteById(id);
     }

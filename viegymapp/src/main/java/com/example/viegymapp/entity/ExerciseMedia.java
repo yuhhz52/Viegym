@@ -28,7 +28,7 @@ public class ExerciseMedia extends BaseEntity{
     private Exercise exercise;
 
     @Column(name = "media_type", nullable = false)
-    private String mediaType; // image, video
+    private String mediaType; // IMAGE, VIDEO, MODEL_3D
 
     @Column(nullable = false)
     private String url;

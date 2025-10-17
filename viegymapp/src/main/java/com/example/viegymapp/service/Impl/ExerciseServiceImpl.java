@@ -16,12 +16,10 @@ import com.example.viegymapp.mapper.ExerciseMediaMapper;
 import com.example.viegymapp.repository.ExerciseMediaRepository;
 import com.example.viegymapp.repository.ExerciseRepository;
 import com.example.viegymapp.repository.TagRepository;
-import com.example.viegymapp.repository.UserRepository;
 import com.example.viegymapp.service.ExerciseService;
 import com.example.viegymapp.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

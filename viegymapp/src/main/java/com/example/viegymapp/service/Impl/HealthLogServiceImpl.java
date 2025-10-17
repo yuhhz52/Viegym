@@ -12,11 +12,13 @@ import com.example.viegymapp.repository.UserRepository;
 import com.example.viegymapp.service.HealthLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Service
 public class HealthLogServiceImpl implements HealthLogService {
     @Autowired
     private HealthLogRepository healthLogRepo;
@@ -28,10 +30,11 @@ public class HealthLogServiceImpl implements HealthLogService {
     @Override
     public List<HealthLogResponse> getHealthLogsOfCurrentUser() {
         User user = getCurrentUser();
-        return healthLogRepo.findByUser(user.getId()).stream()
+        return healthLogRepo.findByUser(user).stream()
                 .map(mapper::toResponse)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public HealthLogResponse createHealthLog(HealthLogRequest request) {

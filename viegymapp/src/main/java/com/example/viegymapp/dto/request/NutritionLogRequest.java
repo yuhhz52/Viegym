@@ -14,7 +14,6 @@ import java.util.UUID;
 @Builder
 public class NutritionLogRequest {
 
-    private UUID userId;
 
     @NotNull
     private LocalDate logDate;
